@@ -1,0 +1,2 @@
+# BusinessAutomation
+日々の業務を自動化するコード集です
