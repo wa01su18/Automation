@@ -94,10 +94,79 @@ Twitter
 ```
 
 ## 3.pythonERROR.py
-Pythonのエラー管理を自動化するプログラムです。
+Pythonのエラー管理を自動化するプログラムです。登録名にエラーの内容と解決策を紐づけます。
 
 ### 3.1.何ができるのか
 まず、ローカルに保存しているshelfファイルからエラー名を検索します。
+![flow1](https://github.com/wa01su18/Automation/blob/images/Flow1.png)
+
+エラーの内容（どんなエラーなのか？）とその解決策が登録されている場合、表示します（①）。登録されてない場合（前にエラーが出た時入力するのがダルかったとか）、Google検索をするかどうか聞きます。「Google検索をする？」でYESとすると、エラー名（SyntaxErrorとか）をクエリとしてGoogle検索に投げ、さらに検索結果の上位5つのURLを新しいタブで開きます（②）。
+![flow2](https://github.com/wa01su18/Automation/blob/images/Flow2.png)
 
 ### 3.2.Usage
+ターミナルからエラー名をコピーしてる状態で実行します。
+```
+> pythonERROR.py
+SEARCHING ERROR>>> SyntaxError: invalid syntax
+SyntaxError: invalid syntaxを確認しました
+
+ERROR->:SyntaxError: invalid syntax
+CONTENTS:構文間違い
+--------------------
+・();:,'"らへんを確認
+--------------------
+```
+
 ### 3.3 Example
+### エラーの名前は登録されているが、内容と解決策が登録されていない場合
+```
+> pythonERROR.py
+SEARCHING ERROR>>> SyntaxError: keyword argument repeated
+SyntaxError: keyword argument repeatedを確認しました
+エラーの内容が登録されていません
+Google検索しますか？(y/n)
+:y
+serching...
+エラーの内容を入力してください
+:引数のキーワードが重複している
+解決策が登録されていません
+Google検索しますか？(y/n)
+:n
+解決策を追加してください(Enterで終了)
+:関数を呼んでいる場所をチェック
+解決策を追加してください(Enterで終了)
+:
+
+ERROR->:SyntaxError: keyword argument repeated
+CONTENTS:引き数のキーワードが重複している
+--------------------
+・関数を呼んでいる場所をチェック
+--------------------
+```
+
+google検索の結果です。
+![result1](https://github.com/wa01su18/Automation/blob/images/result1.png)
+
+### エラーの名前が登録されていない場合
+1.YESの場合
+の「Google検索をするか？」からの流れと一緒になります。検索する場合はURLを開き、しない場合はパスします。どちらを選んでも「エラーの内容と解決策」を登録するように促します。
+
+```
+SEARCHING ERROR>>> SyntaxError: EOL while scanning string literal
+登録されてないエラーです
+Google検索しますか？(y/n)
+:y
+serching...
+エラーの内容を入力してください
+:文字列が閉められていない
+解決策を追加してください(Enterで終了)
+:’”を確認する
+解決策を追加してください(Enterで終了)
+:
+
+ERROR->:SyntaxError: EOL while scanning string literal
+CONTENTS:文字列が閉められていない
+--------------------
+・’”を確認する
+--------------------
+```
